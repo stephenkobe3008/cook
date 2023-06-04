@@ -18,12 +18,13 @@ def generate_recipe():
     # リクエストから料理の名前を取得
     dish_name = request.form.get('dish_name')
 
-    # GPT-3を使用してレシピを生成
-    response = openai.Completion.create(
-        engine="text-davinci-002",
-        prompt=f"I want to cook a {dish_type}. What is the recipe?",
-        temperature=0.5,
-        max_tokens=200
+    # GPT-4を使用してレシピを生成
+    response = openai.ChatCompletion.create(
+        model="gpt-4",
+        messages=[
+            {"role": "system", "content": "You are a helpful assistant."},
+            {"role": "user", "content": f"{dish_name}のレシピを教えてください。"}
+        ]
     )
 
     # レスポンスをJSONとして返す
